@@ -54,7 +54,6 @@ class Events
   def self.message(team_id, event_data)
     user_id = event_data['user']
     # Don't process messages sent from our bot user
-    binding.pry
     unless user_id == $teams[team_id][:bot_user_id]
 
       # This is where our `message` event handlers go:
@@ -82,7 +81,6 @@ class Events
     # welcome message or updating the existing welcome message tutorial items.
     # We open a new DM with `chat.postMessage` and update an existing DM with
     # `chat.update`.
-    binding.pry
     if ts
       $teams[team_id]['client'].chat_update(
         as_user: 'true',
