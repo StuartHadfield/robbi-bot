@@ -6,13 +6,13 @@ Slack-to-coffee shop integration for ZappiStore!
 ## Configuration
 
 1. Install app to your slack. (If you aren't sure how to do this, submit an issue and I'll write something up)
-2. Export API keys on wherever you choose to host the app. `SLACK_REDIRECT_URI` should be the finish auth URI you provide in the slack app interface, e.g. `https://my-foo-app.com/finish_auth`
+2. Export API keys on wherever you choose to host the app (e.g. I'm using Heroku). `SLACK_REDIRECT_URI` should be the finish auth URI you provide in the slack app interface, e.g. `https://my-foo-app.com/finish_auth`
 3. Navigate to `https://my-foo-app/begin_auth`
 4. Your app should authenticate with your slack workspace, now you can start using it.
 
 ## Usage
 
-This app fundamentally assumes some sort of client-server model.  In my case, there is a server being hosted on a Raspberry Pi at the coffee shop I go to.
+This app fundamentally assumes some sort of client-server model.  In my case, there is a server being hosted on a Raspberry Pi at the coffee shop I go to.  I haven't put that code up but I will soon.
 
 1. Ordering through messages
   - You can order by PMing the bot.
