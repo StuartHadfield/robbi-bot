@@ -46,17 +46,14 @@ class API < Sinatra::Base
   end
 end
 
-# This class contains all of the Event handling logic.
 class Events
-  # You may notice that user and channel IDs may be found in
-  # different places depending on the type of event we're receiving.
-
   def self.message(team_id, event_data)
     user_id = event_data['user']
+
     # Don't process messages sent from our bot user
     unless user_id == $teams[team_id][:bot_user_id]
-      # This is where our `message` event handlers go:
       answer = self.assign_message_response(team_id, event_data)
+
       # SHARED MESSAGE EVENT
       # To check for shared messages, we must check for the `attachments` attribute
       # # and see if it contains an `is_shared` attribute.
@@ -65,8 +62,6 @@ class Events
         user_id = event_data['user']
         ts = event_data['attachments'].first['ts']
         channel = event_data['channel']
-        # Update the `share` section of the user's tutorial
-        # Update the user's tutorial message
         self.send_response(team_id, user_id, channel, ts, answer)
       else
         user_id = event_data['user']
@@ -77,8 +72,14 @@ class Events
   end
 
   def self.assign_message_response(team_id, event_data)
-    user_name = $teams[team_id]['client'].users_info(user: event_data['user'])['user']['name']
-    "Hey #{user_name}, I'm still growing up and I don't understand English too well.. Please bear with me while I learn!"
+    if event_data['text'].downcase  =~ /help/i
+      "I see you asked for help!  To be honest, I can't even help myself at the moment, but soon enough I will"
+    elsif event_data['text'].downcase  =~ /hello/i
+      "Hello! I'm hearing you loud and clear, over."
+    else
+      user_name = $teams[team_id]['client'].users_info(user: event_data['user'])['user']['name']
+      "Hey #{user_name}, I'm still growing up and I don't understand English too well.. Please bear with me while I learn!"
+    end
   end
 
   # Send a response to an Event via the Web API.
