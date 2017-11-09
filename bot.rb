@@ -73,9 +73,9 @@ class Events
 
   def self.assign_message_response(team_id, event_data)
     if event_data['text'].downcase  =~ /help/i
-      "I see you asked for help! You can ask me for `help` or for a `menu`, but \
-      other than that, I don't really know what I'm capable of just yet, nor \
-      does my creator... check back soon though! :wink:"
+      "I see you asked for help! You can ask me for `help` or for a `menu`, but "\
+      "other than that, I don't really know what I'm capable of just yet, nor "\
+      "does my creator... check back soon though! :wink:"
     elsif event_data['text'].downcase  =~ /hello/i || event_data['text'].downcase  =~ /hi robbi/i
       "Hello! I'm hearing you loud and clear, over."
     elsif event_data['text'].downcase =~ /menu/i
