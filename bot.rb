@@ -55,35 +55,38 @@ class Events
     user_id = event_data['user']
     # Don't process messages sent from our bot user
     unless user_id == $teams[team_id][:bot_user_id]
-
       # This is where our `message` event handlers go:
-
+      answer = self.assign_message_response(event_data)
       # SHARED MESSAGE EVENT
       # To check for shared messages, we must check for the `attachments` attribute
       # # and see if it contains an `is_shared` attribute.
-      # if event_data['attachments'] && event_data['attachments'].first['is_share']
-      #   # We found a shared message
-      #   user_id = event_data['user']
-      #   ts = event_data['attachments'].first['ts']
-      #   channel = event_data['channel']
-      #   # Update the `share` section of the user's tutorial
-      #   SlackTutorial.update_item( team_id, user_id, SlackTutorial.items[:share])
-      #   # Update the user's tutorial message
-      #   self.send_response(team_id, user_id, channel, ts)
-      # end
-
-      user_id = event_data['user']
-      channel = event_data['channel']
-      self.send_response(team_id, user_id, channel)
+      if event_data['attachments'] && event_data['attachments'].first['is_share']
+        # We found a shared message
+        user_id = event_data['user']
+        ts = event_data['attachments'].first['ts']
+        channel = event_data['channel']
+        # Update the `share` section of the user's tutorial
+        # Update the user's tutorial message
+        self.send_response(team_id, user_id, channel, ts, answer)
+      else
+        user_id = event_data['user']
+        channel = event_data['channel']
+        self.assign_message_response(event_data)
+        self.send_response(team_id, user_id, channel, answer)
+      end
     end
   end
 
+  def self.assign_message_response(event_data)
+    "Hey #{event_data['user']}, I'm still growing up and I don't understand English too well.. Please bear with me while I learn!"
+  end
+
   # Send a response to an Event via the Web API.
-  def self.send_response(team_id, user_id, channel, ts = nil)
+  def self.send_response(team_id, user_id, channel, ts = nil, text)
     $teams[team_id]['client'].chat_postMessage(
       as_user: 'true',
       channel: channel,
-      text: 'foo'
+      text: text
     )
   end
 
