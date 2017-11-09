@@ -56,7 +56,7 @@ class Events
     # Don't process messages sent from our bot user
     unless user_id == $teams[team_id][:bot_user_id]
       # This is where our `message` event handlers go:
-      answer = self.assign_message_response(event_data)
+      answer = self.assign_message_response(team_id, event_data)
       # SHARED MESSAGE EVENT
       # To check for shared messages, we must check for the `attachments` attribute
       # # and see if it contains an `is_shared` attribute.
@@ -71,14 +71,14 @@ class Events
       else
         user_id = event_data['user']
         channel = event_data['channel']
-        self.assign_message_response(event_data)
         self.send_response(team_id, user_id, channel, answer)
       end
     end
   end
 
-  def self.assign_message_response(event_data)
-    "Hey #{event_data['user']}, I'm still growing up and I don't understand English too well.. Please bear with me while I learn!"
+  def self.assign_message_response(team_id, event_data)
+    user_name = $teams[team_id]['client'].users_info(user: event_data['user'])['user']['name']
+    "Hey #{user_name}, I'm still growing up and I don't understand English too well.. Please bear with me while I learn!"
   end
 
   # Send a response to an Event via the Web API.
