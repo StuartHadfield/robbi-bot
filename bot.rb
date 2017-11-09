@@ -73,9 +73,13 @@ class Events
 
   def self.assign_message_response(team_id, event_data)
     if event_data['text'].downcase  =~ /help/i
-      "I see you asked for help!  To be honest, I can't even help myself at the moment, but soon enough I will"
-    elsif event_data['text'].downcase  =~ /hello/i
+      "I see you asked for help! You can ask me for `help` or for a `menu`, but \
+      other than that, I don't really know what I'm capable of just yet, nor \
+      does my creator... check back soon though! :wink:"
+    elsif event_data['text'].downcase  =~ /hello/i || event_data['text'].downcase  =~ /hi robbi/i
       "Hello! I'm hearing you loud and clear, over."
+    elsif event_data['text'].downcase =~ /menu/i
+      "I haven't had time to browse the Molten menu thoroughly yet... You're just gonna get a large cap anyway though right?"
     else
       user_name = $teams[team_id]['client'].users_info(user: event_data['user'])['user']['name']
       "Hey #{user_name}, I'm still growing up and I don't understand English too well.. Please bear with me while I learn!"
