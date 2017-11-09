@@ -60,43 +60,31 @@ class Events
 
       # SHARED MESSAGE EVENT
       # To check for shared messages, we must check for the `attachments` attribute
-      # and see if it contains an `is_shared` attribute.
-      if event_data['attachments'] && event_data['attachments'].first['is_share']
-        # We found a shared message
-        user_id = event_data['user']
-        ts = event_data['attachments'].first['ts']
-        channel = event_data['channel']
-        # Update the `share` section of the user's tutorial
-        SlackTutorial.update_item( team_id, user_id, SlackTutorial.items[:share])
-        # Update the user's tutorial message
-        self.send_response(team_id, user_id, channel, ts)
-      end
+      # # and see if it contains an `is_shared` attribute.
+      # if event_data['attachments'] && event_data['attachments'].first['is_share']
+      #   # We found a shared message
+      #   user_id = event_data['user']
+      #   ts = event_data['attachments'].first['ts']
+      #   channel = event_data['channel']
+      #   # Update the `share` section of the user's tutorial
+      #   SlackTutorial.update_item( team_id, user_id, SlackTutorial.items[:share])
+      #   # Update the user's tutorial message
+      #   self.send_response(team_id, user_id, channel, ts)
+      # end
+
+      user_id = event_data['user']
+      channel = event_data['channel']
+      self.send_response(team_id, user_id, channel)
     end
   end
 
   # Send a response to an Event via the Web API.
-  def self.send_response(team_id, user_id, channel = user_id, ts = nil)
-
-    # `ts` is optional, depending on whether we're sending the initial
-    # welcome message or updating the existing welcome message tutorial items.
-    # We open a new DM with `chat.postMessage` and update an existing DM with
-    # `chat.update`.
-    if ts
-      $teams[team_id]['client'].chat_update(
-        as_user: 'true',
-        channel: channel,
-        ts: ts,
-        text: 'foo',
-        attachments: $teams[team_id][user_id][:tutorial_content]
-      )
-    else
-      $teams[team_id]['client'].chat_postMessage(
-        as_user: 'true',
-        channel: channel,
-        text: 'foo',
-        attachments: $teams[team_id][user_id][:tutorial_content]
-      )
-    end
+  def self.send_response(team_id, user_id, channel, ts = nil)
+    $teams[team_id]['client'].chat_postMessage(
+      as_user: 'true',
+      channel: channel,
+      text: 'foo'
+    )
   end
 
 end
