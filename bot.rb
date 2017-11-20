@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'slack-ruby-client'
+require 'httparty'
 
 # This class contains all of the webserver logic for processing incoming requests from Slack.
 class API < Sinatra::Base
