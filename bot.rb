@@ -83,10 +83,11 @@ class Events
     elsif event_data['text'].downcase =~ /menu/i
       "I haven't had time to browse the Molten menu thoroughly yet... You're just gonna get a large cap anyway though right?"
     elsif event_data['text'].downcase =~ /order/i
+      order_config = event_data['text'].split(',') rescue ['order', 'flat_white']
       options = {
         body: {
           order: { # your resource
-            menu_item: 'flat_white', # your columns/data
+            menu_item: order_config.last, # your columns/data
             name: user_name
           }
         }
