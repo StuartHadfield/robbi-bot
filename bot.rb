@@ -81,7 +81,7 @@ class Events
       "Hello! I'm hearing you loud and clear, over."
     elsif event_data['text'].downcase =~ /menu/i
       "I haven't had time to browse the Molten menu thoroughly yet... You're just gonna get a large cap anyway though right?"
-    elsif event_data['text'].downcase == /order/i
+    elsif event_data['text'].downcase =~ /order/i
       options = {
         body: {
           order: { # your resource
