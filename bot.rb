@@ -91,7 +91,7 @@ class Events
           }
         }
       }
-      response = HTTParty.post('https://25400ab2.ngrok.io', options)
+      response = HTTParty.post('https://25400ab2.ngrok.io/orders', options)
       if response.code == 200
         response_body = JSON.parse(response.body)
         "Molten server says: #{response_body['message']}, id: #{response['order']['id']}, what you ordered: #{response['order']['menu_item']}, ordered for: #{response['order']['name']}"
