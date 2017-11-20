@@ -72,6 +72,7 @@ class Events
   end
 
   def self.assign_message_response(team_id, event_data)
+    user_name = $teams[team_id]['client'].users_info(user: event_data['user'])['user']['name']
     if event_data['text'].downcase  =~ /help/i
       "I see you asked for help! You can ask me for `help` or for a `menu`, but "\
       "other than that, I don't really know what I'm capable of just yet, nor "\
@@ -80,8 +81,23 @@ class Events
       "Hello! I'm hearing you loud and clear, over."
     elsif event_data['text'].downcase =~ /menu/i
       "I haven't had time to browse the Molten menu thoroughly yet... You're just gonna get a large cap anyway though right?"
+    elsif event_data['text'].downcase == /order/i
+      options = {
+        body: {
+          order: { # your resource
+            menu_item: 'flat_white', # your columns/data
+            name: user_name
+          }
+        }
+      }
+      response = HTTParty.post('https://25400ab2.ngrok.io', options)
+      if response.code == 200
+        response_body = JSON.parse(response.body)
+        "Molten server says: #{response_body['message']}, id: #{response['order']['id']}, what you ordered: #{response['order']['menu_item']}, ordered for: #{response['order']['name']}"
+      else
+        "Fuck.  Order failed."
+      end
     else
-      user_name = $teams[team_id]['client'].users_info(user: event_data['user'])['user']['name']
       "Hey #{user_name}, I'm still growing up and I don't understand English too well.. Please bear with me while I learn!"
     end
   end
