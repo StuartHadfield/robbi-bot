@@ -17,7 +17,7 @@ if missing_params.any?
 end
 
 # Set the OAuth scope of our bot. We're just using `bot`.
-# all the things we'll need to access. See: https://api.slack.com/docs/oauth-scopes for more info.
+# See: https://api.slack.com/docs/oauth-scopes for more info.
 BOT_SCOPE = 'bot'
 
 # This hash will contain all the info for each authed team, as well as each team's Slack client object.
