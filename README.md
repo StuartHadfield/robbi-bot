@@ -12,7 +12,7 @@ Slack-to-coffee shop integration for ZappiStore!
 
 ## Usage
 
-This app fundamentally assumes some sort of client-server model.  In my case, there is a server being hosted on a Raspberry Pi at the coffee shop I go to.  That code will live in https://github.com/StuartHadfield/robbi-bot-server.
+This app fundamentally assumes some sort of client-server model.  In my case, there is a server being hosted on a Raspberry Pi at the coffee shop I go to.  That code will live in [this repo](https://github.com/StuartHadfield/robbi-bot-server).
 
 1. Ordering through messages
   - You can order by PMing the bot.
