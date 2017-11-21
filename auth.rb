@@ -16,7 +16,7 @@ if missing_params.any?
   raise "Missing Slack config variables: #{error_msg}"
 end
 
-# Set the OAuth scope of your bot. We're just using `bot`.
+# Set the OAuth scope of our bot. We're just using `bot`.
 # all the things we'll need to access. See: https://api.slack.com/docs/oauth-scopes for more info.
 BOT_SCOPE = 'bot'
 
