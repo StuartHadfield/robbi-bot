@@ -2,7 +2,6 @@ require 'sinatra/base'
 require 'slack-ruby-client'
 
 # Load Slack app info into a hash called `config` from the environment variables assigned during setup
-# See the "Running the app" section of the README for instructions.
 SLACK_CONFIG = {
   slack_client_id: ENV['SLACK_CLIENT_ID'],
   slack_api_secret: ENV['SLACK_API_SECRET'],
@@ -17,7 +16,7 @@ if missing_params.any?
   raise "Missing Slack config variables: #{error_msg}"
 end
 
-# Set the OAuth scope of your bot. We're just using `bot` for this demo, as it has access to
+# Set the OAuth scope of your bot. We're just using `bot`.
 # all the things we'll need to access. See: https://api.slack.com/docs/oauth-scopes for more info.
 BOT_SCOPE = 'bot'
 
@@ -35,7 +34,7 @@ def create_slack_client(slack_api_secret)
 end
 
 # Slack uses OAuth for user authentication. This auth process is performed by exchanging a set of
-# keys and tokens between Slack's servers and yours. This process allows the authorizing user to confirm
+# keys and tokens between Slack's servers and ours. This process allows the authorizing user to confirm
 # that they want to grant our bot access to their team.
 # See https://api.slack.com/docs/oauth for more information.
 class Auth < Sinatra::Base
